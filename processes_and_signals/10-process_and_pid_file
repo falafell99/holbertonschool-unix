@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Создаем PID файл
+echo $$ > /var/run/myscript.pid
+
+# Обработчики сигналов
+trap 'echo "I hate the kill command"; rm -f /var/run/myscript.pid; exit' SIGTERM
+trap 'echo "Y U no love me?!"' SIGINT
+trap 'rm -f /var/run/myscript.pid; exit' SIGQUIT
+
+# Бесконечный цикл
+while true; do
+    echo "To infinity and beyond"
+    sleep 1
+done
