@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Пытаемся создать PID файл с правами
+PIDFILE="/var/run/myscript.pid"
+echo $$ | sudo tee "$PIDFILE" > /dev/null 2>&1
+
+# Обработчики сигналов
+trap 'echo "I hate the kill command"; sudo rm -f "$PIDFILE"; exit' SIGTERM
+trap 'echo "Y U no love me?!"' SIGINT
+trap 'sudo rm -f "$PIDFILE"; exit' SIGQUIT
+
+# Бесконечный цикл
+while true; do
+    echo "To infinity and beyond"
+    sleep 1
+done
